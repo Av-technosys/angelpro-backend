@@ -22,7 +22,7 @@ app.use(
   cors({
     credentials: true,
     // origin: "http://localhost:5173",
-    origin: "https://chimerical-starlight-6eb981.netlify.app/"
+    origin: "https://chimerical-starlight-6eb981.netlify.app"
   })
 );
 
