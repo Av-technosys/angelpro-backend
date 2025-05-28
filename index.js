@@ -1,39 +1,40 @@
 const express = require("express");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const dbConnect = require("./dbConnect");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
 
-// Load environment variables
 dotenv.config();
 
 const authRouter = require("./routers/authRouter");
 const transactionRouter = require("./routers/transactionRouter");
-// const coursesRouter = require("./routers/coursesRouter");
 
 const app = express();
 
-// Middleware
-app.use(express.json());
-app.use(morgan("common"));
-app.use(cookieParser());
+// CORS config
 app.use(
   cors({
+    origin: "https://chimerical-starlight-6eb981.netlify.app",
     credentials: true,
-    origin: "http://localhost:5173",
   })
 );
+app.options("*", cors());
+
+// Middleware
+app.use(express.json());
+app.use(cookieParser());
+app.use(morgan("common"));
 
 // Routes
 app.use("/auth", authRouter);
 app.use("/transactions", transactionRouter);
-// app.use("/courses", coursesRouter);
 
+// Start server
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
 
-// Connect to Database
+// DB connection
 dbConnect();

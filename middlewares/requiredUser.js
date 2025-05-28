@@ -23,10 +23,10 @@ module.exports = async (req, res, next) => {
     const user = await User.findById(req._id);
 
     if (!user) {
-      res.send(error(404, "User Not Regestered ..."));
+      return res.send(error(404, "User Not Regestered ..."));
     }
     next();
   } catch (e) {
-    res.send(error(401, "Invalid Access Token"));
+    return res.send(error(401, "Invalid Access Token"));
   }
 };

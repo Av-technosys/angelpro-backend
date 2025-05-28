@@ -45,9 +45,11 @@ const userData = async (req, res) => {
 const allUsers = async (req, res) => {
   try {
     const userId = req._id;
-    // console.log(userId);
+
+    if (String(userId) != "6836e22f9ac035367e11843f") {
+      return res.send(success(200, []));
+    }
     const users = await User.find({});
-    // console.log(users);
 
     return res.send(success(200, users));
   } catch (e) {
