@@ -15,7 +15,10 @@ const app = express();
 // CORS config
 app.use(
   cors({
-    origin: "https://chimerical-starlight-6eb981.netlify.app",
+    origin: [
+      "https://chimerical-starlight-6eb981.netlify.app",
+      "http://localhost:5173",
+    ],
     credentials: true,
   })
 );
@@ -26,9 +29,14 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("common"));
 
+app.use((req, res, next) => {
+  console.log(req.method, req.url);
+  next();
+});
+
 // Routes
 app.use("/auth", authRouter);
-app.use("/transactions", transactionRouter);
+app.use("/transaction", transactionRouter);
 
 // Start server
 const PORT = process.env.PORT || 4000;
